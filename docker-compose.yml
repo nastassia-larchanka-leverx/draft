@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  generate-ini:
+    build: .
+    command: cp /home/appuser/oomnitza-connector/config.ini /home/appuser/config/
+    volumes:
+      - /home/nastassialarchanka/leverx-projects/oomnitza/oomnitza-connector-config:/home/appuser/config/
+
+  oomnitza-connector:
+    build: .
+    command: python connector.py --ini ../config/config.ini
+    volumes:
+      - /home/nastassialarchanka/leverx-projects/oomnitza/oomnitza-connector-config:/home/appuser/config/
+
+  oomnitza-connector-ldap:
+    build: .
+    command: python connector.py --ini ../config/config.ini upload ldap
+    volumes:
+      - /home/nastassialarchanka/leverx-projects/oomnitza/oomnitza-connector-config:/home/appuser/config/
+
+  oomnitza-connector-csv-assets:
+    build: .
+    command: python connector.py --ini ../config/config.ini upload csv_assets --testmode
+    volumes:
+      - /home/nastassialarchanka/leverx-projects/oomnitza/oomnitza-connector-config:/home/appuser/config/
+      - /home/nastassialarchanka/leverx-projects/oomnitza/oomnitza-connector-csv:/home/appuser/exp/
+
